@@ -29,4 +29,9 @@ This section provides a high-level design of the Hotel Booking System Applicatio
    - Booking : Manages booking details, including check-in and check-out dates, customer information, and room selection.
    - Room : Represents room details, such as type, availability, and pricing.
    - UserAccount :Handles user authentication and profiles.
+  
+
+### Architecture Overview:
+The application follows a modular architecture, separating concerns between the user interface, business logic, and data management. This design ensures maintainability and scalability as new features can be added with minimal impact on existing code.
+
    
