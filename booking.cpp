@@ -68,7 +68,7 @@ void bookRoom(vector<Room>& rooms, vector<Booking>& bookings) {
     cout << "Invalid room number or room is already booked.\n";
 }
 
-//placeholder for rooms db
+//placeholder for rooms db - creation of file tbd
 int main() {
     vector<Room> rooms = {
         Room(101, "Single", 100.0),

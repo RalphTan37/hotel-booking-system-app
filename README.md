@@ -11,5 +11,5 @@ g++ -o booking booking.cpp
 
 Run the Executeable:
 ```
-./booking.cpp
+./booking.exe
 ```
