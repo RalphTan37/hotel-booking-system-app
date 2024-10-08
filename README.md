@@ -40,3 +40,5 @@ The application follows a modular architecture, separating concerns between the 
    ![Screenshot 2024-10-08 153142](https://github.com/user-attachments/assets/fd4d9177-b32f-4dd6-a6f1-6234c9c97e3d)
 
 ![Screenshot 2024-10-08 154019](https://github.com/user-attachments/assets/6e628204-d9b6-4c39-b50c-2b87abc4b761)
+
+![Screenshot 2024-10-08 154859](https://github.com/user-attachments/assets/a7d6a149-ce5a-4eee-ab6f-b25849e1940f)
