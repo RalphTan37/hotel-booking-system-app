@@ -23,8 +23,6 @@ private:
     int roomType;
     int nights;
     bool includeFood;
-    bool includeSnack;
-    bool includeDrink;
     bool includeLaundry;
     int paymentMethod; // 1 for cash, 2 for credit card, 3 for digital wallet
 
@@ -68,12 +66,6 @@ private:
 
         if (includeFood) {
             totalCost += food;
-        }
-        if (includeSnack) {
-            totalCost += snack;
-        }
-        if (includeDrink) {
-            totalCost += drink;
         }
         if (includeLaundry) {
             totalCost += laundry;
