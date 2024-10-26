@@ -1,5 +1,6 @@
 #include "useraccount.h"
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -74,4 +75,46 @@ void UserAccount::cancelBooking() {
 void UserAccount::addBooking(Booking booking) {
     bookings.push_back(booking);
     cout << "Booking added successfully.\n";
+}
+
+map<string, UserAccount> userAccounts;
+
+// Create a new user account
+void createAccount() {
+    string username, email, password;
+
+    cout << "Enter username: ";
+    getline(cin, username);
+    cout << "Enter email: ";
+    getline(cin, email);
+    cout << "Enter password: ";
+    getline(cin, password);
+
+    if (userAccounts.find(username) != userAccounts.end()) {
+        cout << "Username already exists. Please choose a different one.\n";
+        return;
+    }
+
+    UserAccount newUser(username, email, password);
+    userAccounts[username] = newUser;
+    cout << "Account created successfully.\n";
+}
+
+// User login function
+UserAccount* login() {
+    string username, password;
+
+    cout << "Enter username: ";
+    getline(cin, username);
+    cout << "Enter password: ";
+    getline(cin, password);
+
+    if (userAccounts.find(username) != userAccounts.end() &&
+        userAccounts[username].authenticate(username, password)) {
+        cout << "Login successful.\n";
+        return &userAccounts[username];
+    } else {
+        cout << "Invalid username or password.\n";
+        return nullptr;
+    }
 }
