@@ -1,8 +1,8 @@
 # Hotel Booking System Application
 
-Developing a Hotel Booking System Application in C++. 
+Developing a Hotel Booking System Application in C++. Urban Oasis Hotel!
 
-## Running Booking File:
+## Running Program:
 
 Compile the Program:
 ```
