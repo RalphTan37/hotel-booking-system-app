@@ -2,7 +2,7 @@
 
 Developing a Hotel Booking System Application in C++. Urban Oasis Hotel!
 
-## Running Program:
+## Running the Program:
 
 Compile the Program:
 ```
@@ -19,7 +19,7 @@ Compatible with Windows, macOS, and Linux.
 g++ (GNU C++ Compiler) version 5.0 or higher
 
 ## Library Requirements:
-- Open Source Libraries : 
+- Open Source Libraries : Qt
 
 ## High-Level Design Overview:
 This section provides a high-level design of the Hotel Booking System Application, including key components and architecture.
@@ -28,10 +28,11 @@ This section provides a high-level design of the Hotel Booking System Applicatio
 1. User Interface (GUI) :
    - Handles user interactions for booking, checking availability, and managing reservations.
 2. Database :
+   - Storing login credentials
 3. Core Classes :
    - Booking : Manages booking details, including check-in and check-out dates, customer information, and room selection.
    - Room : Represents room details, such as type, availability, and pricing.
-   - UserAccount :Handles user authentication and profiles.
+   - UserAccount : Handles user authentication and profiles.
   
 
 ### Architecture Overview:
