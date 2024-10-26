@@ -1,4 +1,3 @@
-// UserAccount.cpp
 #include "useraccount.h"
 #include <iostream>
 

@@ -1,4 +1,3 @@
-// UserAccount.h
 #ifndef USERACCOUNT_H
 #define USERACCOUNT_H
 

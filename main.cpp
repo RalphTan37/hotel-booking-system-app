@@ -1,4 +1,3 @@
-// main.cpp
 #include <iostream>
 #include <vector>
 #include <map>
@@ -83,7 +82,6 @@ void bookRoom(UserAccount& user, vector<Room>& rooms) {
     cout << "Invalid room number or room is already booked.\n";
 }
 
-// Main program
 int main() {
     vector<Room> rooms = {
         Room(101, "Single", 100.0),
