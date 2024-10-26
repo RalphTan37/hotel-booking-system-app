@@ -14,6 +14,18 @@ Run the Executeable:
 ./main.exe
 ```
 
+## Running the SQL File on VS Code:
+
+Open the Command Palette
+```
+MS SQL: Connect
+```
+
+Type
+```
+MS SQL: Connect
+```
+
 ## System Requirements:
 Compatible with Windows, macOS, and Linux.
 g++ (GNU C++ Compiler) version 5.0 or higher
