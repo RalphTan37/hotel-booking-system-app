@@ -2,18 +2,16 @@
 
 Developing a Hotel Booking System Application in C++. 
 
-final
-
 ## Running Booking File:
 
 Compile the Program:
 ```
-g++ -o booking booking.cpp
+g++ -o main main.cpp
 ```
 
 Run the Executeable:
 ```
-./booking.exe
+./main.exe
 ```
 
 ## System Requirements:

@@ -136,5 +136,6 @@ int main() {
                 } else {
                     cout << "Please login first.\n";
                 }
-                break
-};
+                break;      
+        }
+}
