@@ -17,7 +17,4 @@ int main() {
     } else {
         cout << "Please create an account to ensure your data is saved." << endl;
     }
-
-
-
 }
