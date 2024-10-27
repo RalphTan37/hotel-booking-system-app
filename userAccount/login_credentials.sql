@@ -1,10 +1,8 @@
---Checks if database exists
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'userDB')
 BEGIN
     CREATE DATABASE userDB;
 END
 
---Use the DB
 USE userDB;
 
 CREATE TABLE users (
@@ -18,5 +16,5 @@ CREATE TABLE users (
 );
 
 --Sample Data
-INSERT INTO users (username, password) VALUES ('user1', 'password1');
-INSERT INTO users (username, password) VALUES ('user2', 'password2');
+INSERT INTO users (username, password, email, firstname, lastname, birthdate) VALUES ('user1', 'password1', 'user1@example.com', 'John', 'Doe', '1990-01-01');
+INSERT INTO users (username, password, email, firstname, lastname, birthdate) VALUES ('user2', 'password2', 'user2@example.com', 'Jane', 'Smith', '1992-02-02');

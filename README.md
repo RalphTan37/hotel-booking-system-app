@@ -14,39 +14,36 @@ Run the Executeable:
 ./main.exe
 ```
 
-## Running the SQL File on VS Code:
+## Running SQL Files on VS Code:
 
-Open the Command Palette
+1. Install SQL Server (mssql) as an extension & Microsoft SQL Server Management Studio
 ```
-MS SQL: Connect
+https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
 ```
-
-Type
-```
-MS SQL: Connect
-```
+2. Open the command palette (Crtl+Shift+P)
+3. Make the language is set to SQL
+4. Select MS SQL: Add Connection
 
 ## System Requirements:
 Compatible with Windows, macOS, and Linux.
 g++ (GNU C++ Compiler) version 5.0 or higher
 
 ## Library Requirements:
-- Open Source Libraries : Qt
+- Open Source Libraries: Qt
 
 ## High-Level Design Overview:
 This section provides a high-level design of the Hotel Booking System Application, including key components and architecture.
 
 ### Main Components:
-1. User Interface (GUI) :
+1. User Interface (GUI):
    - Handles user interactions for booking, checking availability, and managing reservations.
-2. Database :
-   - Storing login credentials
+2. Database:
+   - Stores login credentials, hotel rooms
 3. Core Classes :
-   - Booking : Manages booking details, including check-in and check-out dates, customer information, and room selection.
-   - Room : Represents room details, such as type, availability, and pricing.
-   - UserAccount : Handles user authentication and profiles.
+   - Booking: Manages booking details, including check-in and check-out dates, customer information, and room selection.
+   - Room: Represents room details, such as type, availability, and pricing.
+   - UserAccount: Handles user authentication and profiles.
   
-
 ### Architecture Overview:
 The application follows a modular architecture, separating concerns between the user interface, business logic, and data management. This design ensures maintainability and scalability as new features can be added with minimal impact on existing code.
 
