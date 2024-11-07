@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// Establish connection with Hotel Database
 MYSQL* connectDatabase() {
     MYSQL* conn = mysql_init(0);
     if (conn) {
@@ -16,4 +17,19 @@ MYSQL* connectDatabase() {
         cout << "Hotel Database Connection Failed: " << mysql_error(conn) << endl;
         return nullptr;
     }
+}
+
+// Verify Username & Password
+bool verifyCredentials(MYSQL* conn, const string& username, const string& password){
+    string query = "SELECT COUNT (*) FROM LoginCredentials WHERE Username = '" + username + "' AND Password = '" + password + "'";
+    if(mysql_query(conn, query.c_str())){
+        cerr << "Query Error: " << mysql_error(conn) << endl;
+        return false;
+    }
+
+    MYSQL_RES* result = mysql_store_result(conn);
+    MYSQL_ROW row = mysql_fetch_row(result);
+    bool isAuthenticated = (stoi(row[0]) > 0);
+    mysql_free_result(result);
+    return isAuthenticated;
 }
