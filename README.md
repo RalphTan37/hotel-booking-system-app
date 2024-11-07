@@ -14,15 +14,12 @@ Run the Executeable:
 ./main.exe
 ```
 
-## Running SQL Files on VS Code:
+## Connecting to the MySQL Database:
 
-1. Install SQL Server (mssql) as an extension & Microsoft SQL Server Management Studio
-```
-https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
-```
-2. Open the command palette (Crtl+Shift+P)
-3. Make the language is set to SQL
-4. Select MS SQL: Add Connection
+- Ensure that your have MySQL installed.
+- Ensure your the have MySQL C++ Connector installed.
+- In ```c_cpp_properties.json```, include paths to the MySQL Server and MySQL Connecter C++.
+
 
 ## System Requirements:
 Compatible with Windows, macOS, and Linux.

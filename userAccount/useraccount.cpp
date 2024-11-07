@@ -1,6 +1,6 @@
 #include <iostream>
+#include <string>
+#include <mysql.h>
 
-/*
-    The system shall allow users to create accounts, login, and manage profiles
-*/
+using namespace std;
 
