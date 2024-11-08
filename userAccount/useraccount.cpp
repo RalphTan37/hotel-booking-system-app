@@ -33,3 +33,16 @@ bool verifyCredentials(MYSQL* conn, const string& username, const string& passwo
     mysql_free_result(result);
     return isAuthenticated;
 }
+
+// Allow Users to update their password
+void updatePassword(MYSQL* conn, const string& username){
+    string newPassword;
+    cout << "Enter New Password: ";
+    cin >> newPassword;
+    string query = "UPDATE LoginCredentials SET Password = '" + newPassword + "' WHERE Username = '" + username + "'";
+    if (mysql_query(conn, query.c_str())){
+        cerr << "Update Error: " << mysql_error(conn) << endl;
+    } else {
+        cout << "Password Updated Successfully!" << endl;
+    }
+}
