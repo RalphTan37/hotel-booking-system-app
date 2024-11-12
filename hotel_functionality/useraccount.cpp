@@ -46,3 +46,32 @@ void updatePassword(MYSQL* conn, const string& username){
         cout << "Password Updated Successfully!" << endl;
     }
 }
+
+/*Needs to be transferred to main.cpp*/
+int main() {
+    MYSQL* conn = connectDatabase();
+    if (!conn){
+        return -1;
+    }
+
+    string username, password;
+    cout << "Username: ";
+    cin >> username;
+    cout << "Password: ";
+    cin >> password;
+
+    if (verifyCredentials(conn, username, password)) {
+        cout << "Login Successful!" << endl;
+        char choice;
+        cout << "Would you like to update your password? (y/n): ";
+        cin >> choice;
+        if (choice == 'y' || choice == 'Y') {
+            updatePassword(conn, username);
+        } else {
+            cout << "Invalid Username or Password." << endl;
+        }
+    }
+
+    mysql_close(conn);
+    return 0;
+}
