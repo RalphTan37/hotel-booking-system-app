@@ -78,3 +78,18 @@ INSERT INTO Rooms (RoomID, RoomNumber, Type, Price, AvailabilityDate) VALUES
 (24, 124, 'Suite', 325.00, '2024-11-21'),
 (25, 125, 'Single', 102.00, '2024-11-16')
 
+-- Payment Options Table
+CREATE TABLE PaymentOptions (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    CardHolderName VARCHAR(100),
+    CardNumber VARCHAR(16),
+    ExpirationDate DATE,
+    CVV CHAR(3),
+    PaymentType ENUM('Credit Card', 'Debit Card', 'PayPal') NOT NULL,
+    PaymentDetails JSON,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES LoginCredentials(ID)
+)
+
