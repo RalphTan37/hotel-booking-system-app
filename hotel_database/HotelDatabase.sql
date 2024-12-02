@@ -63,6 +63,19 @@ CREATE TABLE PaymentOptions (
     FOREIGN KEY (UserID) REFERENCES LoginCredentials(ID)
 );
 
+-- Sample Data for Payments
+INSERT INTO PaymentOptions (UserID, CardHolderName, CardNumber, ExpirationDate, CVV, PaymentType, PaymentDetails) VALUES 
+(1, 'John Doe', '1234567812345678', '2025-12-31', '123', 'Credit Card', JSON_OBJECT('billing_address', '123 Elm St', 'city', 'Springfield', 'zip', '62704')),
+(2, 'Jane Smith', '8765432187654321', '2024-11-30', '456', 'Debit Card', JSON_OBJECT('bank_name', 'Bank of Springfield', 'account_type', 'Savings')),
+(3, NULL, NULL, NULL, NULL, 'PayPal', JSON_OBJECT('email', 'johndoe@example.com')),
+(4, 'Alice Brown', '2345678923456789', '2026-10-15', '789', 'Credit Card', JSON_OBJECT('billing_address', '456 Oak St', 'city', 'Greenfield', 'zip', '12345')),
+(5, 'Bob White', '3456789034567890', '2023-08-31', '321', 'Debit Card', JSON_OBJECT('bank_name', 'Credit Union', 'account_type', 'Checking')),
+(6, NULL, NULL, NULL, NULL, 'PayPal', JSON_OBJECT('email', 'alicebrown@example.org')),
+(7, 'Carol Gray', '4567890145678901', '2025-09-20', '654', 'Credit Card', JSON_OBJECT('billing_address', '789 Pine St', 'city', 'Mapleton', 'zip', '67890')),
+(8, 'David Black', '5678901256789012', '2024-07-01', '987', 'Debit Card', JSON_OBJECT('bank_name', 'Maple Bank', 'account_type', 'Business')),
+(9, NULL, NULL, NULL, NULL, 'PayPal', JSON_OBJECT('email', 'carolgray@example.com')),
+(10, 'Eve Green', '6789012367890123', '2027-03-05', '852', 'Credit Card', JSON_OBJECT('billing_address', '101 Birch Ave', 'city', 'Oakfield', 'zip', '54321'));
+
 -- Booking Table
 CREATE TABLE Bookings (
     BookingID INT AUTO_INCREMENT PRIMARY KEY,
