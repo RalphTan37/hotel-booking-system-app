@@ -32,3 +32,24 @@ void addPaymentOption(MYSQL* conn, int userID, const string& cardHolderName, con
     }
 }
 
+// Obtaining payment option
+void getPaymentOptions(MYSQL* conn, int userID) {
+    string query = "SELECT * FROM PaymentOptions WHERE UserID = " + to_string(userID);
+    if (mysql_query(conn, query.c_str())) {
+        cerr << "Query Error: " << mysql_error(conn) << endl;
+        return;
+    }
+
+    MYSQL_RES* result = mysql_store_result(conn);
+    if (!result) {
+        cerr << "Store Result Error: " << mysql_error(conn) << endl;
+        return;
+    }
+
+    MYSQL_ROW row;
+    cout << "Payment Options for User ID: " << userID << endl;
+    while ((row = mysql_fetch_row(result))) {
+        cout << "PaymentID: " << row[0] << ", CardHolderName: " << row[2] << ", PaymentType: " << row[6] << endl;
+    }
+    mysql_free_result(result);
+}
