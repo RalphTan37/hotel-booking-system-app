@@ -45,3 +45,13 @@ void searchRoomes(MYSQL* conn, const string& roomType, double minPrice, double m
     }
     mysql_free_result(result);
 }
+
+// Updating Availability Date
+void markRoomUnavailable(MYSQL* conn, int roomID) {
+    string query = "UPDATE Rooms SET AvailabilityDate = '2099-12-31' WHERE RoomID = " + to_string(roomID);
+    if (mysql_query(conn, query.c_str())) {
+        cerr << "Update Error: " << mysql_error(conn) << endl;
+    } else {
+        cout << "RoomID " << roomID << " marked as unavailable." << endl;
+    }
+}
