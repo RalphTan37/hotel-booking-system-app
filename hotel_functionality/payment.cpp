@@ -53,3 +53,13 @@ void getPaymentOptions(MYSQL* conn, int userID) {
     }
     mysql_free_result(result);
 }
+
+// Updating payment option
+void updatePaymentOption(MYSQL* conn, int paymentID, const string& cardHolderName, const string& cardNumber, const string& expirationDate, const string& cvv) {
+    string query = "UPDATE PaymentOptions SET CardHolderName = '" + cardHolderName + "', CardNumber = '" + cardNumber + "', ExpirationDate = '" + expirationDate + "', CVV = '" + cvv + "' WHERE PaymentID = " + to_string(paymentID);
+    if (mysql_query(conn, query.c_str())) {
+        cerr << "Update Error: " << mysql_error(conn) << endl;
+    } else {
+        cout << "Payment Option Update Successfully!" << endl;
+    }
+}
