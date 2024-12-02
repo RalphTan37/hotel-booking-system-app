@@ -63,3 +63,13 @@ CREATE TABLE PaymentOptions (
     FOREIGN KEY (UserID) REFERENCES LoginCredentials(ID)
 );
 
+-- Booking Table
+CREATE TABLE Bookings (
+    BookingID INT AUTO_INCREMENT PRIMARY KEY,
+    RoomNumber INT NOT NULL,
+    CustomerName VARCHAR(100) NOT NULL,
+    BookingDate DATE NOT NULL,
+    FOREIGN KEY (RoomNumber) REFERENCES Rooms(RoomNumber)
+);
+
+
