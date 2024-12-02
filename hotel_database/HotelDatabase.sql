@@ -85,4 +85,16 @@ CREATE TABLE Bookings (
     FOREIGN KEY (RoomNumber) REFERENCES Rooms(RoomNumber)
 );
 
+-- Sample Data for Booking
+INSERT INTO Bookings (RoomNumber, CustomerName, BookingDate) VALUES
+(101, 'John Doe', '2024-12-05'),
+(102, 'Jane Smith', '2024-12-06'),
+(103, 'Alice Brown', '2024-12-07'),
+(104, 'Bob White', '2024-12-08'),
+(105, 'Carol Gray', '2024-12-09'),
+(101, 'David Black', '2024-12-10'),
+(102, 'Eve Green', '2024-12-11'),
+(103, 'Frank Johnson', '2024-12-12'),
+(104, 'Grace Lee', '2024-12-13'),
+(105, 'Henry Adams', '2024-12-14');
 
