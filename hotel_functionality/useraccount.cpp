@@ -1,22 +1,9 @@
+#include <database.h>
 #include <iostream>
 #include <string>
 #include <mysql.h>
 
 using namespace std;
-
-// Establish connection with Hotel DB
-MYSQL* connectDatabase() {
-    MYSQL* conn = mysql_init(0);
-    if (conn) {
-        conn = mysql_real_connect(conn, "localhost", "root", "password", "Hotel", 3306, NULL, 0);
-        if (conn) {
-            cout << "Connected to the Hotel Database!" << endl;
-            return conn;
-        }
-        cout << "Hotel Database Connection Failed: " << mysql_error(conn) << endl;
-        return nullptr;
-    }
-}
 
 // Verify Username & Password
 bool verifyCredentials(MYSQL* conn, const string& username, const string& password){

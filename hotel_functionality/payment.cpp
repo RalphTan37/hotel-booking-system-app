@@ -1,26 +1,9 @@
+#include <database.h>
 #include <iostream>
 #include <string>
 #include <mysql.h>
 
 using namespace std;
-
-// Establish connection with Hotel DB
-MYSQL* connectDatabase() {
-    MYSQL* conn = mysql_init(0);
-    if (!conn) {
-        cerr << "MySQL Initialization Failed" << endl;
-        return nullptr;
-    }
-
-    conn = mysql_real_connect(conn, "localhost", "root", "password", "Hotel", 3306, NULL, 0);
-    if (conn) {
-        cout << "Connected to the Hotel Database!" << endl;
-        return conn;
-    }
-
-    cerr << "Database Connected Failed: " << mysql_error(conn) << endl;
-    return nullptr;
-}
 
 // Adding a new payment option
 void addPaymentOption(MYSQL* conn, int userID, const string& cardHolderName, const string& cardNumber, const string& expirationDate, const string& cvv, const string& paymentType, const string& paymentDetails){

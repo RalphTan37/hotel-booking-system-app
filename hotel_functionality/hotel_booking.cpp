@@ -1,26 +1,9 @@
+#include <database.h>
 #include <iostream>
 #include <string>
 #include <mysql.h>
 
 using namespace std;
-
-// Establish connection with Hotel DB
-MYSQL* connectDatabase() {
-    MYSQL* conn = mysql_init(0);
-    if (!conn) {
-        cerr << "MySQL Initialization Failed" << endl;
-        return nullptr;
-    }
-
-    conn = mysql_real_connect(conn, "localhost", "root", "password", "Hotel", 3306, NULL, 0);
-    if (conn) {
-        cout << "Connected to the Hotel Database!" << endl;
-        return conn;
-    }
-
-    cerr << "Database Connection Failed: " << mysql_error(conn) << endl;
-    return nullptr;
-}
 
 // Checking Room Availability
 bool isRoomAvailable(MYSQL* conn, int roomNumber) {
