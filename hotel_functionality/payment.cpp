@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// Connect to the database
+// Establish connection with Hotel DB
 MYSQL* connectDatabase() {
     MYSQL* conn = mysql_init(0);
     if (!conn) {
