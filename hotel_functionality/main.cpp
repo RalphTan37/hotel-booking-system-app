@@ -77,3 +77,23 @@ void managePayments(MYSQL* conn, int userID) {
         }
     } while (choice != 4);
 }
+
+// Booking the Hotel Room
+void bookRoomFunction(MYSQL* conn) {
+    int roomNumber;
+    string customerName, bookingDate;
+
+    cout << "Enter Room Number: ";
+    cin >> roomNumber;
+    cout << "Enter Customer Name: ";
+    cin.ignore(); // Clear newline left by previous input
+    getline(cin, customerName);
+    cout << "Enter Booking Date (YYYY-MM-DD): ";
+    cin >> bookingDate;
+
+    if (bookRoom(conn, roomNumber, customerName, bookingDate)) {
+        cout << "Booking Successful!" << endl;
+    } else {
+        cout << "Booking Failed." << endl;
+    }
+}
