@@ -97,3 +97,72 @@ void bookRoomFunction(MYSQL* conn) {
         cout << "Booking Failed." << endl;
     }
 }
+
+int main() {
+    MYSQL* conn = connectDatabase();
+    if (!conn) {
+        cerr << "Failed to connect to the database. Exiting...\n";
+        return -1;
+    }
+
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                string username, password;
+                cout << "Enter Username: ";
+                cin >> username;
+                cout << "Enter Password: ";
+                cin >> password;
+
+                if (verifyCredentials(conn, username, password)) {
+                    cout << "Login Successful!" << endl;
+                    char updateChoice;
+                    cout << "Would you like to update your password? (y/n): ";
+                    cin >> updateChoice;
+                    if (updateChoice == 'y' || updateChoice == 'Y') {
+                        updatePassword(conn, username);
+                    }
+                } else {
+                    cout << "Invalid Username or Password.\n";
+                }
+                break;
+            }
+            case 2: {
+                string roomType, availabilityDate;
+                double minPrice, maxPrice;
+                cout << "Enter Room Type (e.g., Single, Double, Suite): ";
+                cin >> roomType;
+                cout << "Enter Minimum Price: ";
+                cin >> minPrice;
+                cout << "Enter Maximum Price: ";
+                cin >> maxPrice;
+                cout << "Enter Availability Date (YYYY-MM-DD): ";
+                cin >> availabilityDate;
+                searchRoomes(conn, roomType, minPrice, maxPrice, availabilityDate);
+                break;
+            }
+            case 3: {
+                int userID;
+                cout << "Enter User ID: ";
+                cin >> userID;
+                managePayments(conn, userID);
+                break;
+            }
+            case 4:
+                bookRoomFunction(conn);
+                break;
+            case 5:
+                cout << "Exiting the system. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    } while (choice != 5);
+
+    mysql_close(conn);
+    return 0;
+}
