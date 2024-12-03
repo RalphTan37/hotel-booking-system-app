@@ -8,8 +8,7 @@ using namespace std;
 MYSQL* connectDatabase() {
     MYSQL* conn = mysql_init(0);
     if (conn) {
-        //Will need to replace username and password with actual values
-        conn = mysql_real_connect(conn, "localhost:3306", "username", "password", "Hotel", 0, NULL, 0);
+        conn = mysql_real_connect(conn, "localhost", "root", "password", "Hotel", 3306, NULL, 0);
         if (conn) {
             cout << "Connected to the Hotel Database!" << endl;
             return conn;

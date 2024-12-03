@@ -12,7 +12,7 @@ MYSQL* connectDatabase() {
         return nullptr;
     }
 
-    conn = mysql_real_connect(conn, "localhost", "username", "password", "Hotel", 3306, NULL, 0);
+    conn = mysql_real_connect(conn, "localhost", "root", "password", "Hotel", 3306, NULL, 0);
     if (conn) {
         cout << "Connected to the Hotel Database!" << endl;
         return conn;
