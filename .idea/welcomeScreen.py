@@ -11,7 +11,7 @@ class WelcomeScreen(QWidget):
         super().__init__()
         self.setWindowTitle("Welcome to Hotel Booking")
         self.setFixedSize(1400, 950)
-        self.setStyleSheet("background-color: #EBC0AB;")
+        self.setStyleSheet("background-color: #B1C29E;")
 
         layout = QVBoxLayout()
 

@@ -1,5 +1,6 @@
 import sys
 from createAccountScreen import CreateAccount
+from accountLoginScreen import AccountLogin
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QFormLayout, QMessageBox
 )
@@ -11,7 +12,7 @@ class Login(QWidget):
         super().__init__()
         self.setWindowTitle("Login Screen")
         self.setFixedSize(1400, 950)
-        self.setStyleSheet("background-color: #EBC0AB;")
+        self.setStyleSheet("background-color: #B1C29E;")
 
         layout = QVBoxLayout()
 
@@ -38,8 +39,8 @@ class Login(QWidget):
 
     def yes_button_clicked(self):  # if they've booked before
         self.hide()
-        self.payment_screen = PaymentScreen()
-        self.payment_screen.show()
+        self.account_login_screen = AccountLogin()
+        self.account_login_screen.show()
 
     def no_button_clicked(self):  # if they've not booked before
         self.hide()

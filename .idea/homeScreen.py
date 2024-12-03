@@ -1,5 +1,6 @@
 import sys
 from bookRoomScreen import BookRoomScreen
+from manageBookingScreen import ManageBookingScreen
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 )
@@ -11,7 +12,7 @@ class HomeScreen(QWidget):
         super().__init__()
         self.setWindowTitle("Hotel Booking System - Home")
         self.setFixedSize(1400, 950)
-        self.setStyleSheet("background-color: #EBC0AB;")
+        self.setStyleSheet("background-color: #B1C29E;")
 
         # Main Layout
         layout = QVBoxLayout()
@@ -52,12 +53,15 @@ class HomeScreen(QWidget):
         # Logic to navigate to the booking screen
         print("Navigating to the booking screen...")
         self.hide()
-        self.book_room_screen = BookRoomScreen()
+        self.book_room_screen = BookRoomScreen(self)
         self.book_room_screen.show()
 
     def manage_booking(self):
         # Logic to navigate to the manage booking screen
         print("Navigating to the manage booking screen...")
+        self.hide()
+        self.manage_booking_screen = ManageBookingScreen(self)
+        self.manage_booking_screen.show()
 
     def log_out(self):
         # Logic to log out and return to the login screen
