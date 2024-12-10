@@ -9,7 +9,7 @@ def test_user_login():
 
 def test_room_availability():
    from database import check_room_availability
-   assert check_room_availability(10) is True  # Room is available
+   assert check_room_availability(101) is True  # Room is available
    assert check_room_availability(102) is False  # Room is booked
 
 #Test Booking Creation - Check if a booking is created correctly with valid data.
