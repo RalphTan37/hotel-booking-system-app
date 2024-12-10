@@ -5,9 +5,12 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout,
                            QGridLayout, QScrollArea, QGroupBox)
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QFont, QColor
+from backend import Backend
+
 
 class RoomCard(QFrame):
     def __init__(self, room_type, price, features):
+        self.backend = Backend()
         super().__init__()
         self.setFrameStyle(QFrame.Box | QFrame.Raised)
         self.setStyleSheet("""
@@ -118,82 +121,60 @@ class CustomerPanel(QWidget):
         layout = QVBoxLayout()
         
         # Welcome message
-        if self.user_data.get('is_guest', False):
-            welcome_text = "Welcome, Guest! Browse our available rooms"
-        else:
-            welcome_text = f"Welcome back, {self.user_data['username']}!"
-        
+        welcome_text = f"Welcome back, {self.user_data['username']}!"
         welcome_label = QLabel(welcome_text)
-        welcome_font = QFont()
-        welcome_font.setPointSize(16)
-        welcome_label.setFont(welcome_font)
         layout.addWidget(welcome_label)
-        
+
         # Search Section
         search_group = QGroupBox("Search Rooms")
-        search_layout = QGridLayout()
-        
-        # Room type selection
-        self.room_type = QComboBox()
-        self.room_type.addItems([
-            "Any Type",
-            "Standard Room",
-            "Deluxe Room",
-            "Executive Suite",
-            "Presidential Suite"
-        ])
-        search_layout.addWidget(QLabel("Room Type:"), 0, 0)
-        search_layout.addWidget(self.room_type, 0, 1)
-        
+        search_layout = QVBoxLayout()
+
         # Date selection
         self.check_in_calendar = QCalendarWidget()
         self.check_in_calendar.setMinimumDate(QDate.currentDate())
-        search_layout.addWidget(QLabel("Check-in Date:"), 1, 0)
-        search_layout.addWidget(self.check_in_calendar, 1, 1)
-        
-        # Number of nights
-        self.nights = QSpinBox()
-        self.nights.setRange(1, 30)
-        search_layout.addWidget(QLabel("Number of Nights:"), 2, 0)
-        search_layout.addWidget(self.nights, 2, 1)
-        
-        # Number of guests
-        self.guests = QSpinBox()
-        self.guests.setRange(1, 4)
-        search_layout.addWidget(QLabel("Number of Guests:"), 3, 0)
-        search_layout.addWidget(self.guests, 3, 1)
-        
-        # Search button
-        search_button = QPushButton("Search Available Rooms")
-        search_button.clicked.connect(self.search_rooms)
-        search_layout.addWidget(search_button, 4, 0, 1, 2)
-        
+        search_layout.addWidget(QLabel("Check-in Date:"))
+        search_layout.addWidget(self.check_in_calendar)
+
+        self.show_rooms_button = QPushButton("Show Available Rooms")
+        self.show_rooms_button.clicked.connect(self.show_available_rooms)
+        search_layout.addWidget(self.show_rooms_button)
+
         search_group.setLayout(search_layout)
         layout.addWidget(search_group)
-        
-        # Available Rooms Section
-        rooms_scroll = QScrollArea()
-        rooms_scroll.setWidgetResizable(True)
-        rooms_container = QWidget()
-        rooms_layout = QGridLayout()
-        
-        # Add sample room cards
-        sample_rooms = [
-            ("Standard Room", 100, ["Queen Bed", "City View", "Free WiFi"]),
-            ("Deluxe Room", 150, ["King Bed", "Ocean View", "Minibar", "Free WiFi"]),
-            ("Executive Suite", 250, ["King Bed", "Living Room", "Ocean View", "Premium Amenities"]),
-            ("Presidential Suite", 500, ["Multiple Rooms", "Private Balcony", "Personal Butler", "Luxury Amenities"])
-        ]
-        
-        for i, (room_type, price, features) in enumerate(sample_rooms):
-            room_card = RoomCard(room_type, price, features)
-            rooms_layout.addWidget(room_card, i // 2, i % 2)
-        
-        rooms_container.setLayout(rooms_layout)
-        rooms_scroll.setWidget(rooms_container)
-        layout.addWidget(rooms_scroll)
-        
+
+        self.rooms_table = QTableWidget()
+        self.rooms_table.setColumnCount(4)
+        self.rooms_table.setHorizontalHeaderLabels(["Room Number", "Type", "Price", "Action"])
+        layout.addWidget(self.rooms_table)
+
         self.setLayout(layout)
+
+
+    def show_available_rooms(self):
+        self.backend = Backend()
+        date = self.check_in_calendar.selectedDate().toString("yyyy-MM-dd")
+        available_rooms = self.backend.get_available_rooms(date)
+        
+        if not available_rooms:
+            QMessageBox.information(self, "No Available Rooms", f"No rooms are available on {date}.")
+        else:
+            self.rooms_table.setRowCount(len(available_rooms))
+            for i, room in enumerate(available_rooms):
+                for j, value in enumerate(room):
+                    self.rooms_table.setItem(i, j, QTableWidgetItem(str(value)))
+                
+                book_button = QPushButton("Book")
+                book_button.clicked.connect(lambda _, room_id=room[0]: self.book_room(room_id, date))
+                self.rooms_table.setCellWidget(i, 3, book_button)
+
+    def book_room(self, room_id, date):
+        check_in = date
+        check_out = (QDate.fromString(date, "yyyy-MM-dd").addDays(1)).toString("yyyy-MM-dd")
+        user_name = self.user_data['username']
+        self.backend.book_room(room_id, check_in, check_out, user_name)
+        QMessageBox.information(self, "Booking Confirmed", f"Room has been booked from {check_in} to {check_out} for {user_name}.")
+        self.show_available_rooms()
+
 
     def search_rooms(self):
         search_details = f"""

@@ -9,6 +9,8 @@ from login_dialog import LoginDialog
 from customer_panel import CustomerPanel
 from admin_panel import AdminPanel
 from payment import PaymentPanel
+from backend import Backend
+
 
 class HotelBookingSystem(QMainWindow):
     def __init__(self):
@@ -166,6 +168,10 @@ class HotelBookingSystem(QMainWindow):
             controls.""")
 
 if __name__ == '__main__':
+    backend = Backend()
+
+    # Launch the application
     app = QApplication(sys.argv)
     window = HotelBookingSystem()
     sys.exit(app.exec_())
+
