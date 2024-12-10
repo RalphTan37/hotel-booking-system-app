@@ -123,6 +123,7 @@ class CustomerPanel(QWidget):
     def show_available_rooms(self):
         date = self.check_in_calendar.selectedDate().toString("yyyy-MM-dd")
         available_rooms = self.backend.get_available_rooms(date)
+        print(available_rooms)
         
         if not available_rooms:
             QMessageBox.information(self, "No Available Rooms", f"No rooms are available on {date}.")
@@ -134,7 +135,7 @@ class CustomerPanel(QWidget):
 
                 book_button = QPushButton("Book")
                 room_id = room[0]
-                room_price = room[2]
+                room_price = room[3]
                 book_button.clicked.connect(lambda _, room_id=room_id, room_price=room_price: self.book_room(
                     room_id=room_id, 
                     room_price=room_price, 
@@ -145,6 +146,7 @@ class CustomerPanel(QWidget):
                 self.rooms_table.setCellWidget(i, 3, book_button)
 
     def book_room(self, room_id, room_price, check_in, check_out, user_name):
+        print(room_price)
         payment_dialog = PaymentDialog(room_price)
         if payment_dialog.exec_() == QDialog.Accepted:
             self.backend.book_room(room_id, check_in, check_out, user_name)
