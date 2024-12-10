@@ -1,47 +1,59 @@
-#Test User Login - Verify that valid credentials allow login and invalid credentials are rejected.
+import unittest
+from unittest.mock import Mock
+from backend import Backend 
+from database import Database
 
-def test_user_login():
-   from login_dialog import validate_login
-   assert validate_login("valid_user", "correct_password") is True
-   assert validate_login("invalid_user", "wrong_password") is False
+class UnitTests(unittest.TestCase):
 
-#Test Room Availability - Ensure that querying an available room returns the correct status.
+    def setUp(self):
+        #Mock the Database class
+        self.mock_db = Mock(spec=Database)
+        self.backend = Backend()
+        self.backend.db = self.mock_db
 
-def test_room_availability():
-   from database import check_room_availability
-   assert check_room_availability(101) is True  # Room is available
-   assert check_room_availability(102) is False  # Room is booked
+    def test_add_user(self):
+        #Test that adding a user works correctly
+        self.backend.add_user("John Doe", "johndoe@example.com", "customer")
+        self.mock_db.add_user.assert_called_with("John Doe", "johndoe@example.com", "customer", "Active")
 
-#Test Booking Creation - Check if a booking is created correctly with valid data.
+    def test_get_users(self):
+        #Test retrieving all users
+        self.mock_db.get_all_users.return_value = [
+            {"name": "John Doe", "email": "johndoe@example.com", "role": "customer", "status": "Active"},
+            {"name": "Jane Smith", "email": "janesmith@example.com", "role": "admin", "status": "Active"}
+        ]
+        
+        users = self.backend.get_users()
 
-def test_create_booking():
-   from booking import create_booking
-   booking_data = {
-       "customer_id": 1,
-       "room_id": 101,
-       "check_in": "2024-12-20",
-       "check_out": "2024-12-25"
-   }
-   assert create_booking(booking_data) is True
+        self.assertEqual(len(users), 2)
+        self.assertEqual(users[0]["name"], "John Doe")
+        self.assertEqual(users[1]["email"], "janesmith@example.com")
 
-#Test Payment Processing - Validate that payments are processed correctly with valid details.
+    def test_delete_user(self):
+        #Test deleting a user by email
+        self.mock_db.delete_user.return_value = None
+        self.backend.delete_user("johndoe@example.com")
+        self.mock_db.delete_user.assert_called_with("johndoe@example.com")
+    
+    def test_get_available_rooms(self):
+        #Test getting available rooms
+        self.mock_db.get_available_rooms.return_value = [101, 103]
+        available_rooms = self.backend.get_available_rooms("2024-12-20")
+        self.assertEqual(available_rooms, [101, 103])
 
-def test_payment_processing():
-   from payment import process_payment
-   payment_details = {
-       "amount": 500.0,
-       "method": "Credit Card",
-       "transaction_id": "123456"
-   }
-   assert process_payment(payment_details) is True
+    def test_book_room(self):
+        #Test booking a room
+        self.mock_db.add_booking.return_value = None
+        self.mock_db.get_all_bookings.return_value = [
+            {"room_id": 101, "check_in": "2024-12-20", "check_out": "2024-12-25", "user_name": "John Doe"}
+        ]
+        self.backend.book_room(101, "2024-12-20", "2024-12-25", "John Doe")
+        self.mock_db.add_booking.assert_called_with(101, "2024-12-20", "2024-12-25", "John Doe")
 
-#Test Admin Room Management - Confirm that admins can update room information.
+        bookings = self.backend.get_all_bookings()
+        self.assertEqual(len(bookings), 1)
+        self.assertEqual(bookings[0]["room_id"], 101)
+        self.assertEqual(bookings[0]["user_name"], "John Doe")
 
-def test_admin_update_room():
-   from admin_panel import update_room
-   updated_data = {
-       "room_id": 101,
-       "status": "Under Maintenance",
-       "price": 150.0
-   }
-   assert update_room(updated_data) is True
+if __name__ == '__main__':
+    unittest.main()
