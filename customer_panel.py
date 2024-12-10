@@ -2,15 +2,14 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout,
                            QLabel, QPushButton, QCalendarWidget,
                            QComboBox, QSpinBox, QTableWidget, 
                            QTableWidgetItem, QMessageBox, QFrame,
-                           QGridLayout, QScrollArea, QGroupBox)
+                           QGridLayout, QScrollArea, QGroupBox, QDialog)
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtGui import QFont, QColor
 from backend import Backend
-
+from payment import PaymentDialog
 
 class RoomCard(QFrame):
     def __init__(self, room_type, price, features):
-        self.backend = Backend()
         super().__init__()
         self.setFrameStyle(QFrame.Box | QFrame.Raised)
         self.setStyleSheet("""
@@ -37,7 +36,6 @@ class RoomCard(QFrame):
         
         layout = QVBoxLayout()
         
-        # Room type
         type_label = QLabel(room_type)
         type_font = QFont()
         type_font.setPointSize(14)
@@ -45,19 +43,16 @@ class RoomCard(QFrame):
         type_label.setFont(type_font)
         layout.addWidget(type_label)
         
-        # Price
         price_label = QLabel(f"${price}/night")
         price_label.setStyleSheet("color: #27ae60; font-weight: bold;")
         layout.addWidget(price_label)
         
-        # Features
         features_layout = QVBoxLayout()
         for feature in features:
             feature_label = QLabel(f"• {feature}")
             features_layout.addWidget(feature_label)
         layout.addLayout(features_layout)
         
-        # Book button
         book_button = QPushButton("View Details")
         book_button.clicked.connect(lambda: self.show_room_details(room_type))
         layout.addWidget(book_button)
@@ -72,6 +67,7 @@ class CustomerPanel(QWidget):
     def __init__(self, user_data):
         super().__init__()
         self.user_data = user_data
+        self.backend = Backend()
         self.setup_ui()
         self.setup_styles()
 
@@ -93,43 +89,18 @@ class CustomerPanel(QWidget):
             QPushButton:hover {
                 background-color: #2980b9;
             }
-            QComboBox {
-                padding: 5px;
-                border: 1px solid #bdc3c7;
-                border-radius: 4px;
-            }
-            QSpinBox {
-                padding: 5px;
-                border: 1px solid #bdc3c7;
-                border-radius: 4px;
-            }
-            QTableWidget {
-                background-color: white;
-                border: 1px solid #dcdde1;
-                border-radius: 4px;
-            }
-            QGroupBox {
-                background-color: white;
-                border: 1px solid #dcdde1;
-                border-radius: 8px;
-                padding: 10px;
-                margin-top: 10px;
-            }
         """)
 
     def setup_ui(self):
         layout = QVBoxLayout()
         
-        # Welcome message
         welcome_text = f"Welcome back, {self.user_data['username']}!"
         welcome_label = QLabel(welcome_text)
         layout.addWidget(welcome_label)
 
-        # Search Section
         search_group = QGroupBox("Search Rooms")
         search_layout = QVBoxLayout()
 
-        # Date selection
         self.check_in_calendar = QCalendarWidget()
         self.check_in_calendar.setMinimumDate(QDate.currentDate())
         search_layout.addWidget(QLabel("Check-in Date:"))
@@ -149,9 +120,7 @@ class CustomerPanel(QWidget):
 
         self.setLayout(layout)
 
-
     def show_available_rooms(self):
-        self.backend = Backend()
         date = self.check_in_calendar.selectedDate().toString("yyyy-MM-dd")
         available_rooms = self.backend.get_available_rooms(date)
         
@@ -160,29 +129,27 @@ class CustomerPanel(QWidget):
         else:
             self.rooms_table.setRowCount(len(available_rooms))
             for i, room in enumerate(available_rooms):
-                for j, value in enumerate(room):
+                for j, value in enumerate(room[:3]):
                     self.rooms_table.setItem(i, j, QTableWidgetItem(str(value)))
-                
+
                 book_button = QPushButton("Book")
-                book_button.clicked.connect(lambda _, room_id=room[0]: self.book_room(room_id, date))
+                room_id = room[0]
+                room_price = room[2]
+                book_button.clicked.connect(lambda _, room_id=room_id, room_price=room_price: self.book_room(
+                    room_id=room_id, 
+                    room_price=room_price, 
+                    check_in=date, 
+                    check_out=(date),  
+                    user_name=self.user_data['username']
+                ))
                 self.rooms_table.setCellWidget(i, 3, book_button)
 
-    def book_room(self, room_id, date):
-        check_in = date
-        check_out = (QDate.fromString(date, "yyyy-MM-dd").addDays(1)).toString("yyyy-MM-dd")
-        user_name = self.user_data['username']
-        self.backend.book_room(room_id, check_in, check_out, user_name)
-        QMessageBox.information(self, "Booking Confirmed", f"Room has been booked from {check_in} to {check_out} for {user_name}.")
-        self.show_available_rooms()
+    def book_room(self, room_id, room_price, check_in, check_out, user_name):
+        payment_dialog = PaymentDialog(room_price)
+        if payment_dialog.exec_() == QDialog.Accepted:
+            self.backend.add_booking(room_id, check_in, check_out, user_name)
+            QMessageBox.information(self, "Booking Success", "Your room has been successfully booked!")
+            self.show_available_rooms()
+        else:
+            QMessageBox.warning(self, "Payment Failed", "Your payment was unsuccessful.")
 
-
-    def search_rooms(self):
-        search_details = f"""
-        Search Parameters:
-        - Room Type: {self.room_type.currentText()}
-        - Check-in Date: {self.check_in_calendar.selectedDate().toString()}
-        - Number of Nights: {self.nights.value()}
-        - Number of Guests: {self.guests.value()}
-        """
-        QMessageBox.information(self, "Search Results", 
-            f"{search_details}\n\nRoom search will be implemented when backend is connected.")

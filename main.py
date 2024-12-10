@@ -8,7 +8,6 @@ from PyQt5.QtGui import QFont
 from login_dialog import LoginDialog
 from customer_panel import CustomerPanel
 from admin_panel import AdminPanel
-from payment import PaymentPanel
 from backend import Backend
 
 
