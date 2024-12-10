@@ -147,7 +147,7 @@ class CustomerPanel(QWidget):
     def book_room(self, room_id, room_price, check_in, check_out, user_name):
         payment_dialog = PaymentDialog(room_price)
         if payment_dialog.exec_() == QDialog.Accepted:
-            self.backend.add_booking(room_id, check_in, check_out, user_name)
+            self.backend.book_room(room_id, check_in, check_out, user_name)
             QMessageBox.information(self, "Booking Success", "Your room has been successfully booked!")
             self.show_available_rooms()
         else:
