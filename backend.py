@@ -29,3 +29,10 @@ class Backend:
         """Return all bookings from the database."""
         return self.db.get_all_bookings()
 
+    def get_user_by_id(self, user_id):
+        """Retrieve user details by user_id."""
+        return self.db.get_user_by_id(user_id)
+
+    def get_booking_by_user(self, user):
+        return self.db.get_booking_by_user(user)
+

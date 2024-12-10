@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QTabWidget, 
                              QPushButton, QTableWidget, QTableWidgetItem, 
-                             QLabel, QScrollArea, QGroupBox, QFormLayout, QDialog)
+                             QLabel, QScrollArea, QGroupBox, QFormLayout, 
+                             QDialog, QHeaderView)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from backend import Backend
@@ -16,13 +17,14 @@ class AdminPanel(QWidget):
     def setup_ui(self):
         layout = QVBoxLayout()
         
+        # Tab System
         tabs = QTabWidget()
         
-        # Create Bookings Tab
+        # Bookings Management Tab
         bookings_tab = self.create_bookings_tab()
         tabs.addTab(bookings_tab, "Bookings Management")
         
-        # Create Users Tab
+        # User Management Tab
         users_tab = self.create_users_tab()
         tabs.addTab(users_tab, "User Management")
         
@@ -40,15 +42,16 @@ class AdminPanel(QWidget):
         self.bookings_table.setHorizontalHeaderLabels([
             "Booking ID", "Room Number", "Type", "Check-in", "Check-out", "User Name"
         ])
+        self.bookings_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
         # Refresh button to reload bookings
-        self.refresh_button = QPushButton("Refresh Bookings")
-        self.refresh_button.clicked.connect(self.load_bookings)
+        self.refresh_bookings_button = QPushButton("Refresh Bookings")
+        self.refresh_bookings_button.clicked.connect(self.load_bookings)
         
         self.load_bookings()
         
         layout.addWidget(self.bookings_table)
-        layout.addWidget(self.refresh_button)
+        layout.addWidget(self.refresh_bookings_button)
         tab.setLayout(layout)
         return tab
 
@@ -61,13 +64,23 @@ class AdminPanel(QWidget):
         self.users_table = QTableWidget()
         self.users_table.setColumnCount(5)
         self.users_table.setHorizontalHeaderLabels(["ID", "Name", "Email", "Role", "Status"])
+        self.users_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
-        # Connect click event to display user details
-        self.users_table.cellClicked.connect(self.display_user_details)
+        # Button Layout
+        button_layout = QHBoxLayout()
+        self.refresh_users_button = QPushButton("Refresh Users")
+        self.refresh_users_button.clicked.connect(self.load_users)
+        
+        self.show_details_button = QPushButton("Show Details")
+        self.show_details_button.clicked.connect(self.show_user_details)
+        
+        button_layout.addWidget(self.refresh_users_button)
+        button_layout.addWidget(self.show_details_button)
         
         self.load_users()
         
         layout.addWidget(self.users_table)
+        layout.addLayout(button_layout)
         tab.setLayout(layout)
         return tab
 
@@ -87,11 +100,15 @@ class AdminPanel(QWidget):
             for j, value in enumerate(user):
                 self.users_table.setItem(i, j, QTableWidgetItem(str(value)))
 
-    def display_user_details(self, row, column):
-        """Show user details and booking information when a user is clicked."""
-        user_id = int(self.users_table.item(row, 0).text())
+    def show_user_details(self):
+        """Show user details and booking information when a user is selected."""
+        selected_items = self.users_table.selectedItems()
+        if not selected_items:
+            return  # No user is selected
+        
+        user_id = int(self.users_table.item(self.users_table.currentRow(), 0).text())
         user = self.backend.get_user_by_id(user_id)
-        booking = self.backend.get_booking_by_user(user[1])
+        bookings = self.backend.get_booking_by_user(user[1])
 
         dialog = QDialog(self)
         dialog.setWindowTitle(f"{user[1]}'s Details")
@@ -102,10 +119,11 @@ class AdminPanel(QWidget):
         layout.addWidget(QLabel(f"Role: {user[3]}"))
         layout.addWidget(QLabel(f"Status: {user[4]}"))
 
-        if booking:
-            layout.addWidget(QLabel(f"Room Booked: {booking[1]} ({booking[2]})"))
-            layout.addWidget(QLabel(f"Check-in: {booking[3]}"))
-            layout.addWidget(QLabel(f"Check-out: {booking[4]}"))
+        if bookings:
+            for booking in bookings:
+                layout.addWidget(QLabel(f"Room Booked: {booking[1]} ({booking[2]})"))
+                layout.addWidget(QLabel(f"Check-in: {booking[3]}"))
+                layout.addWidget(QLabel(f"Check-out: {booking[4]}"))
         else:
             layout.addWidget(QLabel("No bookings found for this user."))
 

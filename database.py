@@ -155,3 +155,32 @@ class Database:
         """Close the connection to the database."""
         self.connection.close()
 
+    def get_user_by_id(self, user_id):
+        """Retrieve user details by user_id."""
+        query = "SELECT * FROM users WHERE id = ?;"
+        cursor = self.connection.cursor()
+        cursor.execute(query, (user_id,))
+        return cursor.fetchone()
+
+    def get_booking_by_user(self, user_name):
+        """Retrieve all bookings made by a user."""
+        query = """
+        SELECT bookings.id, rooms.room_number, rooms.type, bookings.check_in, bookings.check_out 
+        FROM bookings 
+        JOIN rooms ON bookings.room_id = rooms.id 
+        WHERE bookings.user_name = ?;
+        """
+        cursor = self.connection.cursor()
+        cursor.execute(query, (user_name,))
+        return cursor.fetchall()  # Return all bookings
+
+    def check_existing_booking(self, user_name, date):
+        """Check if a user already has a booking for the given date."""
+        query = """
+        SELECT * FROM bookings 
+        WHERE user_name = ? AND ? BETWEEN check_in AND check_out;
+        """
+        cursor = self.connection.cursor()
+        cursor.execute(query, (user_name, date))
+        return cursor.fetchone()  # Return None if no existing booking
+
