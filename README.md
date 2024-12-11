@@ -44,25 +44,6 @@ Welcome to the **Urban Oasis Hotel Management System**. This project is a compre
 
 ---
 
-## **Project Structure**
-Urban Oasis Hotel Management
-├── main.py                # Entry point for launching the application
-├── create_database.py     # Initializes the hotel_management.db SQLite database
-├── hotel_management.db    # SQLite database file (created during execution)
-├── login_dialog.py        # Handles user login
-├── admin_panel.py         # Admin panel for managing users, rooms, and bookings
-├── customer_panel.py      # Customer panel for booking rooms
-├── backend.py             # Handles the bridge between the database and UI
-├── database.py            # Handles database CRUD operations
-├── payment.py             # Handles the payment dialog logic
-├── unit_tests.py          # Unit tests for the project
-├── requirements.txt       # List of dependencies required for the project
-└── .github
-    └── workflows
-        └── ci-cd.yml     # CI/CD workflow configuration
-
----
-
 ## **Installation**
 Follow these instructions to get the **Urban Oasis Hotel Management System** running on your local machine.
 
