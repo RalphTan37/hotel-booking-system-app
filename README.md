@@ -48,24 +48,24 @@ Follow these instructions to set up and run the **Urban Oasis Hotel Management S
 - **pip** (Comes pre-installed with Python 3)
 - **SQLite** (No additional setup required as it is included with Python)
 
-### **1️⃣ Clone the Repository**
+### **Clone the Repository**
 ```bash
 git clone https://github.com/yourusername/urban-oasis-hotel-management.git
 cd urban-oasis-hotel-management
 ```
 
-### **2️⃣ Create a Virtual Environment**
+### **Create a Virtual Environment**
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows use venv\Scripts\activate
 ```
 
-### **3️⃣ Install Project Dependencies**
+### **Install Project Dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### **4️⃣ Create the Database**
+### **Create the Database**
 ```bash
 python3 create_database.py
 ```
