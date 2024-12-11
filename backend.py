@@ -1,3 +1,4 @@
+import sqlite3
 from database import Database
 
 class Backend:
@@ -35,4 +36,8 @@ class Backend:
 
     def get_booking_by_user(self, user):
         return self.db.get_booking_by_user(user)
+    
+    def delete_booking(self, booking_id):
+        """Delete a booking by booking_id."""
+        self.db.delete_booking(booking_id)
 

@@ -44,7 +44,6 @@ class LoginDialog(QDialog):
     def setup_ui(self):
         layout = QVBoxLayout()
         
-        # Hotel Logo/Title
         title_label = QLabel("Urban Oasis Hotel")
         title_label.setAlignment(Qt.AlignCenter)
         title_font = QFont()
@@ -53,15 +52,12 @@ class LoginDialog(QDialog):
         title_label.setFont(title_font)
         layout.addWidget(title_label)
         
-        # Welcome message
         welcome_label = QLabel("Welcome! Please sign in to continue")
         welcome_label.setAlignment(Qt.AlignCenter)
         layout.addWidget(welcome_label)
         
-        # Add some spacing
         layout.addSpacing(20)
         
-        # Form layout for login fields
         form_layout = QFormLayout()
         
         self.username = QLineEdit()
@@ -73,13 +69,11 @@ class LoginDialog(QDialog):
         form_layout.addRow("Username:", self.username)
         form_layout.addRow("Password:", self.password)
         
-        # Remember me checkbox
         self.remember_me = QCheckBox("Remember me")
         form_layout.addRow("", self.remember_me)
         
         layout.addLayout(form_layout)
         
-        # Buttons layout
         buttons_layout = QHBoxLayout()
         
         login_button = QPushButton("Login")
@@ -102,7 +96,6 @@ class LoginDialog(QDialog):
         
         layout.addLayout(buttons_layout)
         
-        # Help text
         help_text = QLabel("Hint: Use any username/password. Prefix with 'admin_' for admin access")
         help_text.setAlignment(Qt.AlignCenter)
         help_text.setStyleSheet("color: #7f8c8d; font-size: 10px;")
@@ -112,10 +105,12 @@ class LoginDialog(QDialog):
 
     def handle_login(self):
         if self.username.text() and self.password.text():
+            role = 'Admin' if self.username.text().startswith('admin_') else 'Guest'
             self.user_data = {
                 'username': self.username.text(),
                 'is_admin': self.username.text().startswith('admin_'),
-                'remember_me': self.remember_me.isChecked()
+                'remember_me': self.remember_me.isChecked(),
+                'role': role
             }
             self.accept()
         else:
@@ -125,6 +120,8 @@ class LoginDialog(QDialog):
         self.user_data = {
             'username': 'Guest User',
             'is_admin': False,
-            'is_guest': True
+            'is_guest': True,
+            'role': 'Guest'
         }
         self.accept()
+

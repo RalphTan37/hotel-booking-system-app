@@ -57,8 +57,6 @@ class HotelBookingSystem(QMainWindow):
         
         self.main_layout.addWidget(self.stacked_widget)
 
-        
-        # Apply styles
         self.setup_styles()
 
     def create_menubar(self):
@@ -90,17 +88,14 @@ class HotelBookingSystem(QMainWindow):
     def create_header(self):
         header_layout = QHBoxLayout()
         
-        # Welcome message
         welcome_label = QLabel(f"Welcome, {self.user_data['username']}!")
         welcome_font = QFont()
         welcome_font.setPointSize(12)
         welcome_label.setFont(welcome_font)
         header_layout.addWidget(welcome_label)
         
-        # Add spacing
         header_layout.addStretch()
         
-        # Navigation buttons
         self.customer_button = QPushButton("Customer Panel")
         self.customer_button.clicked.connect(self.show_customer_panel)
         header_layout.addWidget(self.customer_button)
@@ -169,8 +164,6 @@ class HotelBookingSystem(QMainWindow):
 if __name__ == '__main__':
     backend = Backend()
 
-    # Launch the application
     app = QApplication(sys.argv)
     window = HotelBookingSystem()
     sys.exit(app.exec_())
-

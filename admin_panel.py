@@ -97,7 +97,10 @@ class AdminPanel(QWidget):
         users = self.backend.get_all_users()
         self.users_table.setRowCount(len(users))
         for i, user in enumerate(users):
-            for j, value in enumerate(user):
+            role = 'Admin' if user[2].startswith('admin_') else 'Guest'
+            user_display = list(user)  # Convert tuple to list to modify
+            user_display[3] = role  # Update role display
+            for j, value in enumerate(user_display):
                 self.users_table.setItem(i, j, QTableWidgetItem(str(value)))
 
     def show_user_details(self):
