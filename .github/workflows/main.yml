@@ -85,10 +85,10 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Linter (Lenient Rules)
+      - name: Run Linter
         run: |
           source venv/bin/activate
-          pylint --disable=missing-docstring,invalid-name,too-few-public-methods,too-many-instance-attributes **/*.py > lint.log || true
+          pylint *.py > lint.log || true
 
       - name: Upload Lint Log
         uses: actions/upload-artifact@v3
@@ -117,10 +117,10 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Bandit Security Scan (Python Files Only)
+      - name: Run Security Check
         run: |
           source venv/bin/activate
-          bandit -r ./*.py > security.log || true
+          bandit -r *.py > security.log || true
 
       - name: Upload Security Log
         uses: actions/upload-artifact@v3
