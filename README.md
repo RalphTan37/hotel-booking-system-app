@@ -1,3 +1,138 @@
+# Hotel Booking System - Urban Oasis Hotel
+
+A comprehensive hotel booking system built with C++ backend and Python/Qt frontend. This application provides a robust solution for managing hotel bookings, room availability, and user accounts.
+
+## System Requirements
+
+- Python 3.8 or higher
+- C++ compiler (g++ 5.0 or higher)
+- MySQL Server 8.0 or higher
+- CMake 3.15 or higher
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/hotel-booking-system.git
+cd hotel-booking-system
+```
+
+2. Install Python dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+3. Configure MySQL:
+- Ensure MySQL server is running
+- Create a database using the SQL script:
+```bash
+mysql -u root -p < backend/HotelDatabase.sql
+```
+
+4. Build C++ bindings:
+```bash
+mkdir build && cd build
+cmake ..
+make
+cd ..
+```
+
+5. Install the Python package:
+```bash
+python setup.py install
+```
+
+## Running the Application
+
+1. Start the application:
+```bash
+python frontend/main_window.py
+```
+
+## Project Structure
+
+```
+hotel_booking_system/
+├── backend/          # C++ backend implementation
+├── frontend/         # Python/Qt GUI implementation
+├── bindings/         # C++/Python integration
+├── tests/           # Test suite
+└── docs/            # Documentation
+```
+
+## Features
+
+- **User Management**
+  - Secure login system
+  - User profile management
+  - Role-based access control
+
+- **Booking Management**
+  - Room availability checking
+  - Booking creation and modification
+  - Payment processing
+
+- **Admin Features**
+  - Room management
+  - Booking overview
+  - System configuration
+
+## Development
+
+### Testing
+Run the test suite:
+```bash
+pytest tests/
+```
+
+### Code Style
+Format Python code:
+```bash
+black frontend/
+```
+
+Run linter:
+```bash
+flake8 frontend/
+```
+
+## Architecture
+
+The application follows a layered architecture:
+
+1. **Frontend Layer (Python/Qt)**
+   - Handles user interface and interactions
+   - Communicates with backend through bindings
+
+2. **Backend Layer (C++)**
+   - Implements core business logic
+   - Manages database operations
+   - Handles data processing
+
+3. **Database Layer (MySQL)**
+   - Stores application data
+   - Manages data relationships
+   - Ensures data integrity
+
+![Architecture Diagram](docs/images/architecture.png)
+
+## Database Schema
+
+The system uses MySQL with the following main tables:
+- LoginCredentials: User authentication and profiles
+- Rooms: Room information and availability
+- Bookings: Reservation details
+- PaymentOptions: Payment methods and transactions
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+
 # Hotel Booking System Application
 
 Developing a Hotel Booking System Application in C++. Urban Oasis Hotel!
