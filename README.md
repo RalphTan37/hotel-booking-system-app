@@ -1,185 +1,114 @@
-# Hotel Booking System - Urban Oasis Hotel
+# **Urban Oasis Hotel Management System**
 
-A comprehensive hotel booking system built with C++ backend and Python/Qt frontend. This application provides a robust solution for managing hotel bookings, room availability, and user accounts.
+Welcome to the **Urban Oasis Hotel Management System**. This project is a comprehensive hotel management solution that allows hotel administrators, staff, and guests to manage room bookings, view user information, and handle payments — all in one place. The system features both **Admin** and **Customer** panels with a focus on simplicity, efficiency, and ease of use.
 
-## System Requirements
+---
 
-- Python 3.8 or higher
-- C++ compiler (g++ 5.0 or higher)
-- MySQL Server 8.0 or higher
-- CMake 3.15 or higher
+## **Table of Contents**
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Testing](#testing)
+- [CI/CD Workflow](#cicd-workflow)
+- [Technologies Used](#technologies-used)
+- [File Descriptions](#file-descriptions)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Installation
+---
 
-1. Clone the repository:
+## **Features**
+- **Admin Panel**: 
+  - View all users and manage user accounts.
+  - View all bookings and manage bookings.
+  - View and manage room availability and pricing.
+  
+- **Customer Panel**: 
+  - View available rooms and book rooms.
+  - View personal bookings and check out of rooms.
+
+- **Authentication**: 
+  - Users can log in with a **username** and **password**. 
+  - Admins can log in using a username prefixed with **admin_**.
+  
+- **Payments**:
+  - Customers can make payments via a secure payment dialog.
+  
+- **Database Management**:
+  - Automatically creates and initializes the database with default users, rooms, and bookings.
+  
+- **Security and Validation**:
+  - User inputs are validated for correct data formats.
+  - Room booking dates are checked to avoid conflicts.
+
+---
+
+## **Project Structure**
+Urban Oasis Hotel Management
+├── main.py                # Entry point for launching the application
+├── create_database.py     # Initializes the hotel_management.db SQLite database
+├── hotel_management.db    # SQLite database file (created during execution)
+├── login_dialog.py        # Handles user login
+├── admin_panel.py         # Admin panel for managing users, rooms, and bookings
+├── customer_panel.py      # Customer panel for booking rooms
+├── backend.py             # Handles the bridge between the database and UI
+├── database.py            # Handles database CRUD operations
+├── payment.py             # Handles the payment dialog logic
+├── unit_tests.py          # Unit tests for the project
+├── requirements.txt       # List of dependencies required for the project
+└── .github
+    └── workflows
+        └── ci-cd.yml     # CI/CD workflow configuration
+
+---
+
+## **Installation**
+Follow these instructions to get the **Urban Oasis Hotel Management System** running on your local machine.
+
+### **Prerequisites**
+- **Python 3.11.4** (Make sure it is installed and added to your system PATH)
+- **pip** (comes pre-installed with Python 3)
+- **SQLite** (No additional setup required since it is included with Python)
+
+### **Clone the Repository**
+
 ```bash
-git clone https://github.com/yourusername/hotel-booking-system.git
-cd hotel-booking-system
+git clone https://github.com/yourusername/urban-oasis-hotel-management.git
+cd urban-oasis-hotel-management
 ```
 
-2. Install Python dependencies:
+## **Create a Virtual Environment**
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use venv\Scripts\activate
+```
+
+## **Install Project Dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Configure MySQL:
-- Ensure MySQL server is running
-- Create a database using the SQL script:
+## **Create the Database**
+
 ```bash
-mysql -u root -p < backend/HotelDatabase.sql
+python3 create_database.py
 ```
 
-4. Build C++ bindings:
+## **Usage**
+
+To start the application, run:
+
 ```bash
-mkdir build && cd build
-cmake ..
-make
-cd ..
+python3 main.py
 ```
-
-5. Install the Python package:
-```bash
-python setup.py install
-```
-
-## Running the Application
-
-1. Start the application:
-```bash
-python frontend/main_window.py
-```
-
-## Project Structure
-
-```
-hotel_booking_system/
-├── backend/          # C++ backend implementation
-├── frontend/         # Python/Qt GUI implementation
-├── bindings/         # C++/Python integration
-├── tests/           # Test suite
-└── docs/            # Documentation
-```
-
-## Features
-
-- **User Management**
-  - Secure login system
-  - User profile management
-  - Role-based access control
-
-- **Booking Management**
-  - Room availability checking
-  - Booking creation and modification
-  - Payment processing
-
-- **Admin Features**
-  - Room management
-  - Booking overview
-  - System configuration
-
-## Development
-
-### Testing
-Run the test suite:
-```bash
-pytest tests/
-```
-
-### Code Style
-Format Python code:
-```bash
-black frontend/
-```
-
-Run linter:
-```bash
-flake8 frontend/
-```
-
-## Architecture
-
-The application follows a layered architecture:
-
-1. **Frontend Layer (Python/Qt)**
-   - Handles user interface and interactions
-   - Communicates with backend through bindings
-
-2. **Backend Layer (C++)**
-   - Implements core business logic
-   - Manages database operations
-   - Handles data processing
-
-3. **Database Layer (MySQL)**
-   - Stores application data
-   - Manages data relationships
-   - Ensures data integrity
-
-![Architecture Diagram](docs/images/architecture.png)
-
-## Database Schema
-
-The system uses MySQL with the following main tables:
-- LoginCredentials: User authentication and profiles
-- Rooms: Room information and availability
-- Bookings: Reservation details
-- PaymentOptions: Payment methods and transactions
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
-
-
-# Hotel Booking System Application
-
-Developing a Hotel Booking System Application in C++. Urban Oasis Hotel!
-
-## Running the Program:
-
-Compile the Program:
-```
-g++ -o main main.cpp
-```
-
-Run the Executeable:
-```
-./main.exe
-```
-
-## Connecting to the MySQL Database:
-
-- Ensure that your have MySQL installed.
-- Ensure your the have MySQL C++ Connector installed.
-- In ```c_cpp_properties.json```, include paths to the MySQL Server and MySQL Connecter C++.
-
-
-## System Requirements:
-Compatible with Windows, macOS, and Linux.
-g++ (GNU C++ Compiler) version 5.0 or higher
-
-## Library Requirements:
-- Open Source Libraries: Qt
-
-## High-Level Design Overview:
-This section provides a high-level design of the Hotel Booking System Application, including key components and architecture.
-
-### Main Components:
-1. User Interface (GUI):
-   - Handles user interactions for booking, checking availability, and managing reservations.
-2. Database:
-   - Stores login credentials, hotel rooms
-3. Core Classes :
-   - Booking: Manages booking details, including check-in and check-out dates, customer information, and room selection.
-   - Room: Represents room details, such as type, availability, and pricing.
-   - UserAccount: Handles user authentication and profiles.
   
-### Architecture Overview:
+## Architecture Overview:
 The application follows a modular architecture, separating concerns between the user interface, business logic, and data management. This design ensures maintainability and scalability as new features can be added with minimal impact on existing code.
 
-   ![Screenshot 2024-10-08 153142](https://github.com/user-attachments/assets/fd4d9177-b32f-4dd6-a6f1-6234c9c97e3d)
+![Screenshot 2024-10-08 153142](https://github.com/user-attachments/assets/fd4d9177-b32f-4dd6-a6f1-6234c9c97e3d)
 
 ![Screenshot 2024-10-08 154019](https://github.com/user-attachments/assets/6e628204-d9b6-4c39-b50c-2b87abc4b761)
 
